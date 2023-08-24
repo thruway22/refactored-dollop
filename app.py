@@ -23,6 +23,7 @@ st.write(f"{account_name} will receive {shares_received} shares for a contributi
 if st.button("Update Fund", type='primary', use_container_width=True):
     account.contribute(contribution)
     st.success(f"Updated fund and {account_name}'s account successfully!")
+    st.experimental_rerun()
 
 st.divider()
 
