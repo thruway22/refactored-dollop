@@ -7,12 +7,6 @@ fund = Fund()
 # Streamlit Interface
 st.title("Fund Tracker")
 
-# Display fund metrics
-col1, col2, col3 = st.columns(3)
-col1.metric('NAV', fund.fund_value)
-col2.metric('Shares', fund.fund_shares)
-col3.metric('Price', fund.share_price)
-
 # 1. Input current NAV
 current_nav = st.number_input("Enter the current NAV:", value=fund.fund_value)
 
@@ -29,3 +23,9 @@ st.write(f"{account_name} will receive {shares_received} shares for a contributi
 if st.button("Update Fund"):
     account.contribute(contribution)
     st.success(f"Updated fund and {account_name}'s account successfully!")
+
+# Display fund metrics
+col1, col2, col3 = st.columns(3)
+col1.metric('NAV', fund.fund_value)
+col2.metric('Shares', fund.fund_shares)
+col3.metric('Price', fund.share_price)
