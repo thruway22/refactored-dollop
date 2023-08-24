@@ -19,9 +19,17 @@ st.metric('NAV', fund_value)
 st.metric('Shares', fund_shares)
 st.metric('Price', fund_value / fund_shares)
 
+fund = Fund()
+saleh = Account("saleh", fund)
+ruyuf = Account("ruyuf", fund)
+
 form = st.form('form')
-doc = form.radio('account', ['saleh', 'ruyuf'])
+account = form.radio('account', ['saleh', 'ruyuf'])
 amount = form.number_input('amount', min_value=0)
 submitted = form.form_submit_button("Submit")
+
+if submitted:
+    saleh.contribute(amount)
+
 
 

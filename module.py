@@ -17,8 +17,10 @@ class Fund:
         # Calculate shares to be issued based on the current share price
         shares_issued = amount / self.share_price
         # Update total amount and total shares
-        self.fund_value += amount
-        self.fund_shares += shares_issued
+        conn.collection("fund").document("fund").update({"value": (self.fund_value + amount)})
+        conn.collection("fund").document("fund").update({"shares": (self.fund_shares + shares_issued)})
+        # self.fund_value += amount
+        # self.fund_shares += shares_issued
         return shares_issued
 
 # fund = Fund()
@@ -29,7 +31,8 @@ class Account:
     def __init__(self, name, fund):
         self.name = name
         self.fund = fund
-        self.fund_shares = 0.0
+        self.account_con = conn.get_collection('account').document(name).get().to_dict()['con']
+        self.account_shares = conn.get_collection('account').document(name).get().to_dict()['shares']
 
     def contribute(self, amount):
         # Use the fund's add_money method to get the shares for the contributed amount
