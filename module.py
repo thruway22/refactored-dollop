@@ -37,21 +37,57 @@ class Fund:
         conn.get_collection("fund").document(self.timestamp).set({'value': new_value, 'shares': new_shares})
         return shares_issued
 
+# Adjustments to the Account class in module.py
+
 class Account:
     def __init__(self, name, fund):
         self.name = name
         self.fund = fund
-        self.account_con = conn.get_collection('account').document(name).get().to_dict()['con']
-        self.account_shares = conn.get_collection('account').document(name).get().to_dict()['shares']
+
+    @property
+    def latest_entry(self):
+        entries = [x.id for x in conn.get_collection(self.name).stream()]
+        if entries:
+            return str(max(datetime.strptime(ts, '%Y-%m-%d %H:%M:%S') for ts in entries))
+        return None
+
+    @property
+    def cumulative_contribution(self):
+        latest = self.latest_entry
+        if latest:
+            return conn.get_collection(self.name).document(latest).get().to_dict()['cumulative_contribution']
+        return 0.0
+
+    @property
+    def cumulative_shares(self):
+        latest = self.latest_entry
+        if latest:
+            return conn.get_collection(self.name).document(latest).get().to_dict()['cumulative_shares']
+        return 0.0
 
     def contribute(self, amount):
-        # Use the fund's add_money method to get the shares for the contributed amount
-        shares_received = self.fund.add_money(amount)
-        # Push the new contribution and shares to Firestore
-        new_contribution = self.account_con + amount
-        new_shares = self.account_shares + shares_received
-        conn.get_collection("account").document(self.name).update({'con': new_contribution, 'shares': new_shares})
+        # Calculate shares received based on the fund's share price
+        shares_received = amount / self.fund.share_price
+
+        # Calculate cumulative values
+        new_cumulative_contribution = self.cumulative_contribution + amount
+        new_cumulative_shares = self.cumulative_shares + shares_received
+
+        # Push the data to Firestore
+        conn.get_collection(self.name).document(self.fund.timestamp).set({
+            'transaction_contribution': amount,
+            'transaction_shares': shares_received,
+            'cumulative_contribution': new_cumulative_contribution,
+            'cumulative_shares': new_cumulative_shares
+        })
+
+        # Update the fund's NAV and shares
+        self.fund.add_money(amount)
+
         return shares_received
+
+# This is the adjusted Account logic. Next, we'll integrate it with the app.py logic.
+
 
 # This is just the adjusted module.py logic. I'll update app.py next.
 
