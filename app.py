@@ -17,6 +17,7 @@ fund_shares = db.document("fund").get().to_dict()['shares']
 
 st.metric('NAV', fund_value)
 st.metric('Shares', fund_shares)
+st.metric('Price', fund_value / fund_shares)
 
 form = st.form('form')
 doc = form.radio('account', ['saleh', 'ruyuf'])
