@@ -12,7 +12,7 @@ db = conn.get_collection('fund')
 st.write(db.document("fund").get().to_dict()['value'])
 
 docs = conn.get_collection('holdings').stream()
-items = list(map(lambda x: {'ticker': x.id, **x.to_dict()}, docs))
+items = list(map(lambda x: {'ticker': x.id, docs))
 st.write(items)
 
 
