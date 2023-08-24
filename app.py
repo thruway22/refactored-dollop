@@ -20,9 +20,11 @@ shares_received = contribution / fund.share_price
 st.write(f"{account_name} will receive {shares_received} shares for a contribution of ${contribution}.")
 
 # 4. Button to push the updated NAV and shares to Firestore
-if st.button("Update Fund"):
+if st.button("Update Fund", type='primary', use_container_width=True):
     account.contribute(contribution)
     st.success(f"Updated fund and {account_name}'s account successfully!")
+
+st.divider
 
 # Display fund metrics
 col1, col2, col3 = st.columns(3)
