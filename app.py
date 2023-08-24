@@ -10,3 +10,10 @@ conn = auth.Connect()
 db = conn.get_collection('fund')
 
 st.write(db.document("fund").get().to_dict()['value'])
+
+
+fund_value = db.document("fund").get().to_dict()['value']
+fund_shares = db.document("fund").get().to_dict()['shares']
+
+st.metric('NAV', fund_value)
+st.metric('Shares', fund_shares)
