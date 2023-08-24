@@ -1,3 +1,5 @@
+import auth
+
 class Fund:
     def __init__(self):
         # Initial amount and shares
