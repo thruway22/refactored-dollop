@@ -13,9 +13,12 @@ db = conn.get_collection('fund')
 docs = conn.get_collection('fund').stream()
 # items = list(map(lambda x: {'ticker': x.id, **x.to_dict()}, docs))
 items = [x.id for x in docs]
+
+st.write(items)
+
 latest_date = max(datetime.strptime(date, '%Y-%m-%d') for date in items)
 
-st.write(items, latest_date)
+st.write(latest_date)
 
 
 # fund_value = db.document("fund").get().to_dict()['value']
