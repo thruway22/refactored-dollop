@@ -8,19 +8,6 @@ from module import Fund, Account  # Assuming we saved our Fund and Account class
 import auth
 
 conn = auth.Connect()
-db = conn.get_collection('fund')
-
-docs = conn.get_collection('fund').stream()
-# items = list(map(lambda x: {'ticker': x.id, **x.to_dict()}, docs))
-items = [x.id for x in docs]
-
-st.write(items)
-
-latest_date = max(datetime.strptime(ts, '%Y-%m-%d %H:%M:%S') for ts in items)
-
-st.write(latest_date)
-
-datetime.now()
 
 value = st.number_input('value', min_value=0)
 shares = st.number_input('shares', min_value=0)
@@ -37,7 +24,7 @@ fund_shares = fund.fund_shares
 
 st.metric('NAV', fund_value)
 st.metric('Shares', fund_shares)
-st.metric('Price', fund_value / fund_shares)
+st.metric('Price', fund.share_price)
 
 # fund = Fund()
 # saleh = Account("saleh", fund)
