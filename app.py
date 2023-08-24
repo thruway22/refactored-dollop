@@ -17,7 +17,7 @@ contribution = st.number_input(f"Enter {account_name}'s contribution:")
 
 # 3. Calculate and display shares for the account based on the current share price
 shares_received = contribution / fund.share_price
-st.write(f"{account_name} will receive {shares_received} shares for a contribution of ${contribution}.")
+st.write(f"{account_name} will receive {shares_received} shares for a contribution of {contribution}.")
 
 # 4. Button to push the updated NAV and shares to Firestore
 if st.button("Update Fund", type='primary', use_container_width=True):
