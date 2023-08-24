@@ -24,7 +24,7 @@ if st.button("Update Fund", type='primary', use_container_width=True):
     account.contribute(contribution)
     st.success(f"Updated fund and {account_name}'s account successfully!")
 
-st.divider
+st.divider()
 
 # Display fund metrics
 col1, col2, col3 = st.columns(3)
