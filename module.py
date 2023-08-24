@@ -7,7 +7,7 @@ class Fund:
     def __init__(self):
         # Initial amount and shares
         self.timestamps = [x.id for x in conn.get_collection('fund').stream()]
-        self.latest_timestamp = max(datetime.strptime(ts, '%Y-%m-%d %H:%M:%S') for ts in self.timestamps)
+        self.latest_timestamp = str(max(datetime.strptime(ts, '%Y-%m-%d %H:%M:%S') for ts in self.timestamps))
         self.fund_value = conn.get_collection('fund').document(self.latest_timestamp).get().to_dict()['value']
         self.fund_shares = conn.get_collection('fund').document(self.latest_timestamp).get().to_dict()['shares']
 
