@@ -31,13 +31,13 @@ if submitted:
         ).set({'value': value, 'shares': shares})
     
 
+fund = Fund()
+fund_value = fund.fund_value
+fund_shares = fund.fund_shares
 
-# fund_value = db.document("fund").get().to_dict()['value']
-# fund_shares = db.document("fund").get().to_dict()['shares']
-
-# st.metric('NAV', fund_value)
-# st.metric('Shares', fund_shares)
-# st.metric('Price', fund_value / fund_shares)
+st.metric('NAV', fund_value)
+st.metric('Shares', fund_shares)
+st.metric('Price', fund_value / fund_shares)
 
 # fund = Fund()
 # saleh = Account("saleh", fund)
