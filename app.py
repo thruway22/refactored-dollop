@@ -22,4 +22,6 @@ st.metric('Price', fund_value / fund_shares)
 form = st.form('form')
 doc = form.radio('account', ['saleh', 'ruyuf'])
 amount = form.number_input('amount', min_value=0)
-submitted = st.form_submit_button("Submit")
+submitted = form.form_submit_button("Submit")
+
+
