@@ -1,39 +1,31 @@
-import pandas as pd
-import yfinance as yf
 import streamlit as st
-from datetime import datetime
-from module import Fund, Account  # Assuming we saved our Fund and Account classes in 'fund_module.py'
+from module import Fund, Account
 
-
-import auth
-
-conn = auth.Connect()
-
-value = st.number_input('value', min_value=0)
-shares = st.number_input('shares', min_value=0)
-submitted = st.button("Submit")
-if submitted:
-    conn.get_collection("fund").document(
-        str(datetime.now().replace(microsecond=0))
-        ).set({'value': value, 'shares': shares})
-    
-
+# Create a fund instance and accounts for each person
 fund = Fund()
 
-st.metric('NAV', fund.fund_value)
-st.metric('Shares', fund.fund_shares)
-st.metric('Price', fund.share_price)
+# Streamlit Interface
+st.title("Fund Tracker")
 
-# fund = Fund()
-# saleh = Account("saleh", fund)
-# ruyuf = Account("ruyuf", fund)
+# Display fund metrics
+col1, col2, col3 = st.columns(3)
+col1.metric('NAV', fund.fund_value)
+col2.metric('Shares', fund.fund_shares)
+col3.metric('Price', fund.share_price)
 
-# account = st.radio('account', ['saleh', 'ruyuf'])
-# amount = st.number_input('amount', min_value=0)
-# submitted = st.button("Submit")
+# 1. Input current NAV
+current_nav = st.number_input("Enter the current NAV:", value=fund.fund_value)
 
-# if submitted:
-#     saleh.contribute(amount)
+# 2. Select account and input their contribution
+account_name = st.selectbox("Select Account:", ['saleh', 'ruyuf'])  # Add more names if needed
+account = Account(account_name, fund)
+contribution = st.number_input(f"Enter {account_name}'s contribution:")
 
+# 3. Calculate and display shares for the account based on the current share price
+shares_received = contribution / fund.share_price
+st.write(f"{account_name} will receive {shares_received} shares for a contribution of ${contribution}.")
 
-
+# 4. Button to push the updated NAV and shares to Firestore
+if st.button("Update Fund"):
+    account.contribute(contribution)
+    st.success(f"Updated fund and {account_name}'s account successfully!")
