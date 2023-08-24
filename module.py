@@ -15,13 +15,11 @@ class Fund:
 
     @property
     def fund_value(self):
-        return self.fund_value = conn.get_collection('fund').document(
-            self.latest_entry).get().to_dict()['value']
+        return self.fund_value = conn.get_collection('fund').document(self.latest_entry).get().to_dict()['value']
 
     @property
     def fund_shares(self):
-        return self.fund_shares = conn.get_collection('fund').document(
-            self.latest_entry).get().to_dict()['shares']
+        return self.fund_shares = conn.get_collection('fund').document(self.latest_entry).get().to_dict()['shares']
 
     @property
     def share_price(self):
