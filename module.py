@@ -14,12 +14,12 @@ class Fund:
         return str(max(datetime.strptime(ts, '%Y-%m-%d %H:%M:%S') for ts in entries))
 
     @property
-    def fund_value(self)
+    def fund_value(self):
         return self.fund_value = conn.get_collection('fund').document(
             self.latest_entry).get().to_dict()['value']
 
     @property
-    def fund_shares(self)
+    def fund_shares(self):
         return self.fund_shares = conn.get_collection('fund').document(
             self.latest_entry).get().to_dict()['shares']
 
