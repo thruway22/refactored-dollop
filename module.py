@@ -17,8 +17,8 @@ class Fund:
         # Calculate shares to be issued based on the current share price
         shares_issued = amount / self.share_price
         # Update total amount and total shares
-        conn.collection("fund").document("fund").update({"value": (self.fund_value + amount)})
-        conn.collection("fund").document("fund").update({"shares": (self.fund_shares + shares_issued)})
+        conn.get_collection("fund").document("fund").update({"value": (self.fund_value + amount)})
+        conn.get_collection("fund").document("fund").update({"shares": (self.fund_shares + shares_issued)})
         # self.fund_value += amount
         # self.fund_shares += shares_issued
         return shares_issued
@@ -38,7 +38,7 @@ class Account:
         # Use the fund's add_money method to get the shares for the contributed amount
         shares_received = self.fund.add_money(amount)
         # Update the account's total shares
-        self.fund_shares += shares_received
+        # self.fund_shares += shares_received
         return shares_received
 
 # # Testing the Account class
