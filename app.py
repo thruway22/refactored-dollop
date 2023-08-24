@@ -16,9 +16,9 @@ items = [x.id for x in docs]
 
 st.write(items)
 
-latest_date = max(datetime.strptime(ts, '%Y-%m-%d %H:%M:%S') for ts in items)
+# latest_date = max(datetime.strptime(ts, '%Y-%m-%d %H:%M:%S') for ts in items)
 
-st.write(latest_date)
+# st.write(latest_date)
 
 datetime.now()
 
@@ -26,7 +26,9 @@ value = st.number_input('value', min_value=0)
 shares = st.number_input('shares', min_value=0)
 submitted = st.button("Submit")
 if submitted:
-    conn.get_collection("fund").document(str(datetime.now())).set({'value': value, 'shares': shares})
+    conn.get_collection("fund").document(
+        str(datetime.now().replace(microsecond=0))
+        ).set({'value': value, 'shares': shares})
     
 
 
