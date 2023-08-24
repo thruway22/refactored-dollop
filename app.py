@@ -9,7 +9,7 @@ import auth
 conn = auth.Connect()
 db = conn.get_collection('fund')
 
-st.write(db.document("fund").get())
+db.document("fund").get()
 
 
 
