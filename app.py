@@ -26,7 +26,7 @@ value = st.number_input('value', min_value=0)
 shares = st.number_input('shares', min_value=0)
 submitted = st.button("Submit")
 if submitted:
-    db.collection("fund").document(datetime.now()).set({'value': value, 'shares': shares})
+    db.get_collection("fund").document(datetime.now()).set({'value': value, 'shares': shares})
     
 
 
