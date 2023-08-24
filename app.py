@@ -16,7 +16,7 @@ items = [x.id for x in docs]
 
 st.write(items)
 
-latest_date = max(datetime.strptime(date) for date in items)
+latest_date = max(datetime.strptime(ts, '%Y-%m-%d %H:%M:%S') for ts in items)
 
 st.write(latest_date)
 
