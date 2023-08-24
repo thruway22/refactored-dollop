@@ -19,11 +19,9 @@ if submitted:
     
 
 fund = Fund()
-fund_value = fund.fund_value
-fund_shares = fund.fund_shares
 
-st.metric('NAV', fund_value)
-st.metric('Shares', fund_shares)
+st.metric('NAV', fund.fund_value)
+st.metric('Shares', fund.fund_shares)
 st.metric('Price', fund.share_price)
 
 # fund = Fund()

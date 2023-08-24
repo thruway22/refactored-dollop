@@ -6,15 +6,31 @@ conn = auth.Connect()
 class Fund:
     def __init__(self):
         # Initial amount and shares
-        self.timestamps = [x.id for x in conn.get_collection('fund').stream()]
-        self.latest_timestamp = str(max(datetime.strptime(ts, '%Y-%m-%d %H:%M:%S') for ts in self.timestamps))
-        self.fund_value = conn.get_collection('fund').document(self.latest_timestamp).get().to_dict()['value']
-        self.fund_shares = conn.get_collection('fund').document(self.latest_timestamp).get().to_dict()['shares']
+        self.timestamp = str(datetime.now().replace(microsecond=0))
+
+    @property
+    def latest_entry(self):
+        entries = [x.id for x in conn.get_collection('fund').stream()]
+        return str(max(datetime.strptime(ts, '%Y-%m-%d %H:%M:%S') for ts in entries))
+
+    @property
+    def fund_value(self)
+        return self.fund_value = conn.get_collection('fund').document(
+            self.latest_entry).get().to_dict()['value']
+
+    @property
+    def fund_shares(self)
+        return self.fund_shares = conn.get_collection('fund').document(
+            self.latest_entry).get().to_dict()['shares']
 
     @property
     def share_price(self):
         # Share price is total amount divided by total shares, if no shares exist yet, price is 1
         return self.fund_value / self.fund_shares if self.fund_shares > 0 else 1.0
+
+    def update_nav(self, new_nav):
+        shares = self.fund_shares
+        conn.get_collection("fund").document(str(datetime.now().replace(microsecond=0))).set({'value': new_nav, 'shares': shares})
 
     def add_money(self, amount):
         # Calculate shares to be issued based on the current share price
