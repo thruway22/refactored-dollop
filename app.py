@@ -1,10 +1,7 @@
 import pandas as pd
 import yfinance as yf
 import streamlit as st
-import module as mod
-
-import streamlit as st
-from fund_module import Fund, Account  # Assuming we saved our Fund and Account classes in 'fund_module.py'
+from module import Fund, Account  # Assuming we saved our Fund and Account classes in 'fund_module.py'
 
 # Create a fund instance and accounts for each person
 fund = Fund()
