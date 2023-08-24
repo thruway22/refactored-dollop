@@ -23,10 +23,9 @@ fund = Fund()
 saleh = Account("saleh", fund)
 ruyuf = Account("ruyuf", fund)
 
-form = st.form('form')
-account = form.radio('account', ['saleh', 'ruyuf'])
-amount = form.number_input('amount', min_value=0)
-submitted = form.form_submit_button("Submit")
+account = st.radio('account', ['saleh', 'ruyuf'])
+amount = st.number_input('amount', min_value=0)
+submitted = st.button("Submit")
 
 if submitted:
     saleh.contribute(amount)
