@@ -1,10 +1,12 @@
 import auth
 
+conn = auth.Connect()
+
 class Fund:
     def __init__(self):
         # Initial amount and shares
-        self.total_amount = 0.0
-        self.total_shares = 0.0
+        self.total_amount = conn.get_collection('fund').document("fund").get().to_dict()['value']
+        self.total_shares = conn.get_collection('fund').document("fund").get().to_dict()['shares']
 
     @property
     def share_price(self):
