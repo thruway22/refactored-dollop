@@ -1,3 +1,3 @@
 import streamlit as st
 
-st.title('Test Page')
+st.title('Fund Page')
